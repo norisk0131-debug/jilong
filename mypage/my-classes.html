@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 강의 | 여백의 시간</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Noto Serif KR',serif;
+  background:#f6f2ea;
+  color:#3e3a36;
+  line-height:1.8;
+}
+
+nav{
+  text-align:center;
+  padding:25px 0;
+  font-size:0.9rem;
+}
+nav a{
+  margin:0 18px;
+  text-decoration:none;
+  color:#555;
+}
+nav a:hover{opacity:0.6;}
+
+.container{
+  max-width:900px;
+  margin:120px auto;
+  padding:0 20px;
+}
+
+h1{
+  font-weight:400;
+  margin-bottom:20px;
+}
+
+.subtitle{
+  color:#7a746e;
+  margin-bottom:50px;
+}
+
+.card{
+  background:#fffdf8;
+  padding:40px;
+  margin-bottom:40px;
+  box-shadow:0 12px 35px rgba(0,0,0,0.05);
+}
+
+.progress-bar{
+  height:8px;
+  background:#e5dfd6;
+  margin-top:10px;
+}
+.progress{
+  height:8px;
+  background:#3e3a36;
+  width:60%;
+}
+
+.button{
+  display:inline-block;
+  margin-top:20px;
+  padding:10px 25px;
+  border:1px solid #3e3a36;
+  text-decoration:none;
+  color:#3e3a36;
+}
+.button:hover{
+  background:#3e3a36;
+  color:#fff;
+}
+
+footer{
+  text-align:center;
+  padding:80px;
+  font-size:0.8rem;
+  color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+if(!localStorage.getItem("currentUser")){
+  window.location.href="../auth/login.html";
+}
+</script>
+
+<nav>
+<a href="../index.html">Home</a>
+<a href="../classes.html">Classes</a>
+<a href="../gallery.html">Gallery</a>
+<a href="../studio.html">Studio</a>
+<a href="../community.html">Community</a>
+<a href="dashboard.html">My</a>
+</nav>
+
+<div class="container">
+
+<h1>내 강의</h1>
+<div class="subtitle">지금 당신이 걷고 있는 여백의 시간</div>
+
+<div class="card">
+<h2>캘리그라피 기초 4주 과정</h2>
+<p>현재 3주차 진행 중</p>
+
+<div class="progress-bar">
+  <div class="progress"></div>
+</div>
+
+<a href="../classes.html" class="button">강의 다시 보기</a>
+</div>
+
+<div class="card">
+<h2>힐링 글쓰기 4주 루틴</h2>
+<p>1주차 시작 대기 중</p>
+
+<div class="progress-bar">
+  <div class="progress" style="width:20%;"></div>
+</div>
+
+<a href="../classes.html" class="button">수업 페이지 이동</a>
+</div>
+
+</div>
+
+<footer>
+© 2026 여백의 시간.
+</footer>
+
+</body>
+</html>

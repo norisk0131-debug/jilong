@@ -1,0 +1,41 @@
+body{
+  margin:0;
+  font-family:'Noto Serif KR',serif;
+  background:#f6f2ea;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  color:#3e3a36;
+}
+
+.auth-container{
+  width:100%;
+  max-width:400px;
+  text-align:center;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border:1px solid #ccc;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:1px solid #3e3a36;
+  background:none;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#3e3a36;
+  color:white;
+}
+
+.link{
+  margin-top:15px;
+  font-size:0.9rem;
+}

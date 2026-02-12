@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 작품 | 여백의 시간</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Noto Serif KR',serif;
+  background:#f6f2ea;
+  color:#3e3a36;
+  line-height:1.9;
+}
+
+nav{
+  text-align:center;
+  padding:25px 0;
+  font-size:0.9rem;
+}
+nav a{
+  margin:0 18px;
+  text-decoration:none;
+  color:#555;
+}
+nav a:hover{opacity:0.6;}
+
+.container{
+  max-width:1100px;
+  margin:120px auto;
+  padding:0 20px;
+}
+
+h1{font-weight:400;margin-bottom:10px;}
+.subtitle{color:#7a746e;margin-bottom:50px;}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:30px;
+}
+
+.card{
+  background:#fffdf8;
+  padding:30px;
+  box-shadow:0 12px 35px rgba(0,0,0,0.05);
+}
+
+canvas{
+  width:100%;
+  margin-bottom:20px;
+  background:#fdfbf7;
+}
+
+.analysis{
+  font-size:0.85rem;
+  color:#777;
+  margin-bottom:15px;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+button{
+  padding:6px 14px;
+  border:1px solid #3e3a36;
+  background:none;
+  cursor:pointer;
+  font-size:0.8rem;
+}
+button:hover{
+  background:#3e3a36;
+  color:#fff;
+}
+
+.empty{
+  text-align:center;
+  padding:100px 0;
+  color:#999;
+}
+
+footer{
+  text-align:center;
+  padding:80px;
+  font-size:0.8rem;
+  color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+if(!localStorage.getItem("currentUser")){
+  window.location.href="../auth/login.html";
+}
+</script>
+
+<nav>
+<a href="../index.html">Home</a>
+<a href="../community.html">Community</a>
+<a href="dashboard.html">My</a>
+</nav>
+
+<div class="container">
+<h1>내 작품</h1>
+<div class="subtitle">당신의 마음이 머문 흔적</div>
+<div id="worksContainer" class="grid"></div>
+</div>
+
+<footer>© 2026 여백의 시간</footer>
+
+<script>
+
+const currentUser = localStorage.getItem("currentUser");
+const works = JSON.parse(localStorage.getItem("savedWorks")) || [];
+const myWorks = works.filter(w => w.user === currentUser);
+const container = document.getElementById("worksContainer");
+
+if(myWorks.length === 0){
+  container.innerHTML = `
+  <div class="empty">
+    아직 저장된 작품이 없습니다.<br><br>
+    오늘 한 문장을 남겨보세요.
+  </div>`;
+}else{
+  myWorks.reverse().forEach((work,index)=>{
+    const card=document.createElement("div");
+    card.className="card";
+
+    const canvas=document.createElement("canvas");
+    canvas.height=200;
+
+    const analysis = analyzeEmotion(work.text);
+
+    card.appendChild(canvas);
+
+    const analysisDiv=document.createElement("div");
+    analysisDiv.className="analysis";
+    analysisDiv.innerText="AI 감정 분석: "+analysis;
+    card.appendChild(analysisDiv);
+
+    const actions=document.createElement("div");
+    actions.className="actions";
+
+    actions.innerHTML=`
+      <button onclick="downloadPNG(this)">PNG 저장</button>
+      <button onclick="deleteWork(${index})">삭제</button>
+      <button onclick="saveToCloud('${work.text}')">클라우드 저장</button>
+    `;
+
+    card.appendChild(actions);
+    container.appendChild(card);
+
+    drawWork(canvas, work.text);
+  });
+}
+
+/* 수묵 배경 + 텍스트 합성 */
+function drawWork(canvas,text){
+  const ctx=canvas.getContext("2d");
+
+  // 배경
+  const gradient=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+  gradient.addColorStop(0,"#f8f4ec");
+  gradient.addColorStop(1,"#ebe4d9");
+  ctx.fillStyle=gradient;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // 잉크 느낌 원
+  ctx.globalAlpha=0.15;
+  ctx.beginPath();
+  ctx.arc(canvas.width/2,100,80,0,Math.PI*2);
+  ctx.fillStyle="#000";
+  ctx.fill();
+  ctx.globalAlpha=1;
+
+  // 텍스트
+  ctx.font="20px serif";
+  ctx.fillStyle="#2e2a26";
+  ctx.textAlign="center";
+  ctx.fillText(text, canvas.width/2, 110);
+}
+
+/* PNG 저장 */
+function downloadPNG(button){
+  const canvas=button.closest(".card").querySelector("canvas");
+  const link=document.createElement("a");
+  link.download="여백의시간_작품.png";
+  link.href=canvas.toDataURL();
+  link.click();
+}
+
+/* 감정 분석 (로컬 기반) */
+function analyzeEmotion(text){
+  const positive=["행복","감사","사랑","기쁨"];
+  const negative=["외로움","슬픔","힘들","아프"];
+
+  for(let word of positive){
+    if(text.includes(word)) return "따뜻한 긍정의 흐름 🌿";
+  }
+  for(let word of negative){
+    if(text.includes(word)) return "잔잔한 위로가 필요한 순간 🌫";
+  }
+  return "고요한 사색의 상태";
+}
+
+/* 삭제 */
+function deleteWork(index){
+  const allWorks = JSON.parse(localStorage.getItem("savedWorks")) || [];
+  const filtered = allWorks.filter(w => w.user === currentUser);
+  filtered.splice(index,1);
+
+  const remaining = allWorks.filter(w => w.user !== currentUser);
+  const updated = [...remaining, ...filtered];
+
+  localStorage.setItem("savedWorks", JSON.stringify(updated));
+  location.reload();
+}
+
+/* 클라우드 저장 구조 (확장 준비) */
+function saveToCloud(text){
+  alert("Firebase 연동 시 실제 클라우드에 저장됩니다.");
+}
+
+</script>
+
+</body>
+</html>

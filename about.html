@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | 여백의 시간</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Noto Serif KR',serif;
+  background:#f8f5ef;
+  color:#2e2a26;
+  line-height:2;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ===== 잉크 배경 ===== */
+
+.ink-bg{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+  overflow:hidden;
+}
+
+.ink{
+  position:absolute;
+  width:600px;
+  height:600px;
+  background:radial-gradient(circle, rgba(40,35,30,0.15) 0%, rgba(40,35,30,0.05) 40%, transparent 70%);
+  border-radius:50%;
+  filter:blur(60px);
+  animation:flow 30s infinite alternate ease-in-out;
+}
+
+.ink:nth-child(1){
+  top:10%;
+  left:5%;
+}
+
+.ink:nth-child(2){
+  bottom:5%;
+  right:10%;
+  animation-duration:40s;
+}
+
+@keyframes flow{
+  0%{
+    transform:scale(1) translate(0,0);
+  }
+  50%{
+    transform:scale(1.2) translate(80px,-40px);
+  }
+  100%{
+    transform:scale(1) translate(-60px,60px);
+  }
+}
+
+/* ===== 네비 ===== */
+
+nav{
+  text-align:center;
+  padding:25px 0;
+  font-size:0.9rem;
+}
+nav a{
+  margin:0 18px;
+  text-decoration:none;
+  color:#555;
+  transition:0.3s;
+}
+nav a:hover{
+  opacity:0.5;
+}
+
+/* ===== 섹션 ===== */
+
+section{
+  max-width:800px;
+  margin:180px auto;
+  padding:0 20px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1.2s ease;
+}
+
+section.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+h1{
+  font-size:2.2rem;
+  font-weight:400;
+  margin-bottom:50px;
+}
+
+p{
+  margin-bottom:28px;
+  font-size:1.05rem;
+  color:#4b443f;
+}
+
+.highlight{
+  font-size:1.2rem;
+  margin-bottom:60px;
+}
+
+.small{
+  font-size:0.9rem;
+  color:#777;
+  margin-top:40px;
+}
+
+footer{
+  text-align:center;
+  padding:120px 20px;
+  font-size:0.8rem;
+  color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 잉크 배경 -->
+<div class="ink-bg">
+  <div class="ink"></div>
+  <div class="ink"></div>
+</div>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="classes.html">Classes</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="studio.html">Studio</a>
+  <a href="community.html">Community</a>
+  <a href="mypage/dashboard.html">My</a>
+</nav>
+
+<section>
+  <h1>얼굴 없이 작품으로 이야기합니다.</h1>
+  <p class="highlight">
+    여백의 시간은<br>
+    글을 배우는 공간이 아니라<br>
+    멈추는 법을 배우는 공간입니다.
+  </p>
+</section>
+
+<section>
+  <p>
+    빠르게 채워지는 세상 속에서<br>
+    우리는 잠시 비워지는 연습을 합니다.
+  </p>
+  <p>
+    쓰기 전에,<br>
+    마음을 먼저 고르는 시간.
+  </p>
+  <p>
+    그 조용한 순간을 위해 이 공간은 존재합니다.
+  </p>
+</section>
+
+<section>
+  <p>
+    여백은 비어있는 자리가 아닙니다.
+  </p>
+  <p>
+    숨이 머무는 자리이며<br>
+    감정이 스며드는 공간입니다.
+  </p>
+  <p>
+    글씨 사이의 간격처럼<br>
+    사람의 마음에도 간격이 필요합니다.
+  </p>
+</section>
+
+<section>
+  <h1>작가에 대하여</h1>
+  <p>
+    빠른 성취보다 느린 완성을 선택했습니다.
+  </p>
+  <p>
+    여백의 시간은 제가 먼저 필요했던 공간이었습니다.
+  </p>
+  <p>
+    그래서 이곳은 가르치는 자리라기보다 함께 머무는 자리입니다.
+  </p>
+</section>
+
+<footer>
+© 2026 여백의 시간. All Rights Reserved.
+</footer>
+
+<script>
+const sections = document.querySelectorAll("section");
+
+window.addEventListener("scroll",()=>{
+  sections.forEach(sec=>{
+    const top = sec.getBoundingClientRect().top;
+    if(top < window.innerHeight - 100){
+      sec.classList.add("visible");
+    }
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>힐링 글쓰기 | 여백의 시간</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Noto Serif KR',serif;
+  background:#f8f5ef;
+  color:#2e2a26;
+  line-height:2;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* 은은한 수묵 배경 */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:url("images/ink-bg.png") center/cover no-repeat;
+  opacity:0.05;
+  z-index:-1;
+  animation:slowMove 40s infinite alternate ease-in-out;
+}
+@keyframes slowMove{
+  from{transform:scale(1);}
+  to{transform:scale(1.1) translateY(-20px);}
+}
+
+nav{text-align:center;padding:25px 0;}
+nav a{margin:0 18px;text-decoration:none;color:#555;}
+nav a:hover{opacity:0.6;}
+
+section{
+  max-width:1000px;
+  margin:140px auto;
+  padding:0 20px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s ease;
+}
+section.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+h1{font-weight:400;font-size:2rem;margin-bottom:40px;}
+h2{font-weight:400;margin-bottom:40px;}
+p{margin-bottom:20px;color:#4b443f;}
+
+/* 주차 카드 */
+.week-wrap{
+  display:flex;
+  flex-wrap:wrap;
+  gap:30px;
+  justify-content:center;
+}
+.week{
+  width:420px;
+  background:#fffdf8;
+  padding:40px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.05);
+  text-align:left;
+}
+
+/* 노트 이미지 */
+.note-gallery{
+  display:flex;
+  gap:30px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.note-gallery img{
+  width:350px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.08);
+}
+
+/* 체험 글쓰기 */
+textarea{
+  width:100%;
+  height:150px;
+  padding:15px;
+  border:1px solid #ccc;
+  margin-top:20px;
+  font-family:'Noto Serif KR',serif;
+}
+
+.button{
+  display:inline-block;
+  margin-top:20px;
+  padding:10px 25px;
+  border:1px solid #2e2a26;
+  background:none;
+  cursor:pointer;
+}
+.button:hover{
+  background:#2e2a26;
+  color:#fff;
+}
+
+.save-msg{
+  margin-top:10px;
+  font-size:0.9rem;
+  color:#7a746e;
+}
+
+/* 신청 폼 */
+form{
+  margin-top:30px;
+  text-align:left;
+}
+form input{
+  width:100%;
+  padding:10px;
+  margin-bottom:15px;
+  border:1px solid #ccc;
+}
+
+/* 후기 */
+.reviews{
+  display:flex;
+  gap:30px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.review{
+  width:300px;
+  background:#fffdf8;
+  padding:30px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.05);
+}
+
+footer{
+  text-align:center;
+  padding:100px 20px;
+  font-size:0.8rem;
+  color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="classes.html">Classes</a>
+<a href="gallery.html">Gallery</a>
+<a href="studio.html">Studio</a>
+<a href="community.html">Community</a>
+</nav>
+
+<section>
+<h1>잘 쓰는 것이 아니라, 솔직해지는 연습입니다.</h1>
+<p>하루 10분, 나를 만나는 4주의 기록.</p>
+</section>
+
+<section>
+<h2>4주 루틴 기록</h2>
+<div class="week-wrap">
+<div class="week"><strong>1주차 · 멈추기</strong><br>하루 10분 기록</div>
+<div class="week"><strong>2주차 · 바라보기</strong><br>반복되는 생각 관찰</div>
+<div class="week"><strong>3주차 · 정리하기</strong><br>과거 내려놓기</div>
+<div class="week"><strong>4주차 · 다짐하기</strong><br>작은 루틴 설계</div>
+</div>
+</section>
+
+<section>
+<h2>기록 노트</h2>
+<div class="note-gallery">
+<img src="images/writing-note1.jpg">
+<img src="images/writing-note2.jpg">
+</div>
+</section>
+
+<section>
+<h2>오늘의 기록 체험</h2>
+<p>지금 이 순간의 마음을 적어보세요.</p>
+
+<textarea id="dailyWrite" placeholder="오늘의 감정을 적어보세요..."></textarea>
+<button class="button" onclick="saveWriting()">기록 저장</button>
+<div class="save-msg" id="saveMsg"></div>
+</section>
+
+<section>
+<h2>참여 후기</h2>
+<div class="reviews">
+<div class="review">“글을 쓰며 제 마음을 처음 마주했습니다.”</div>
+<div class="review">“기록은 저를 다독이는 시간이었습니다.”</div>
+<div class="review">“4주 후, 조금 더 단단해졌습니다.”</div>
+</div>
+</section>
+
+<section>
+<h2>참여 신청</h2>
+<form onsubmit="return submitForm()">
+<input type="text" placeholder="이름" required>
+<input type="tel" placeholder="연락처" required>
+<button class="button">신청하기</button>
+</form>
+<div class="save-msg" id="formMsg"></div>
+</section>
+
+<footer>
+© 2026 여백의 시간. All Rights Reserved.
+</footer>
+
+<script>
+/* 스크롤 애니메이션 */
+const sections=document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
+  sections.forEach(sec=>{
+    if(sec.getBoundingClientRect().top<window.innerHeight-100){
+      sec.classList.add("visible");
+    }
+  });
+});
+
+/* 기록 저장 */
+function saveWriting(){
+  const text=document.getElementById("dailyWrite").value;
+  if(text.trim()==="") return;
+  localStorage.setItem("dailyWriting",text);
+  document.getElementById("saveMsg").innerText="기록이 저장되었습니다 🌿";
+}
+
+/* 불러오기 */
+window.onload=function(){
+  const saved=localStorage.getItem("dailyWriting");
+  if(saved){
+    document.getElementById("dailyWrite").value=saved;
+  }
+}
+
+/* 신청 폼 */
+function submitForm(){
+  document.getElementById("formMsg").innerText="신청이 접수되었습니다. 곧 연락드리겠습니다.";
+  return false;
+}
+</script>
+
+</body>
+</html>

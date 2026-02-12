@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>여백의 시간 | 감성 캘리 플랫폼</title>
+<meta name="description" content="여백의 시간은 감성과 힐링을 위한 캘리그라피 공간입니다. 천천히 머무는 시간을 경험하세요.">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Noto Serif KR',serif;
+  background:#f8f5ef;
+  color:#2e2a26;
+  line-height:1.9;
+  overflow-x:hidden;
+  transition:opacity 0.6s ease;
+}
+
+.fade-out{
+  opacity:0;
+}
+
+/* 네비 */
+nav{
+  position:fixed;
+  width:100%;
+  top:0;
+  left:0;
+  text-align:center;
+  padding:20px 0;
+  font-size:0.9rem;
+  transition:0.4s;
+  z-index:100;
+}
+
+nav.scrolled{
+  backdrop-filter:blur(10px);
+  background:rgba(248,245,239,0.8);
+}
+
+nav a{
+  margin:0 18px;
+  text-decoration:none;
+  color:#444;
+  transition:0.3s;
+}
+
+nav a:hover{opacity:0.5;}
+
+#dynamicMenu a{
+  opacity:0;
+  transition:0.6s ease;
+}
+#dynamicMenu a.show{
+  opacity:1;
+}
+
+#authArea{margin-left:15px;}
+
+/* 섹션 */
+section{
+  max-width:900px;
+  margin:200px auto;
+  padding:0 20px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1.2s ease;
+}
+section.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+h1{
+  font-size:2.6rem;
+  font-weight:400;
+  margin-bottom:30px;
+}
+
+.subtitle{
+  font-size:1.1rem;
+  color:#6a625c;
+  margin-bottom:40px;
+}
+
+.button{
+  display:inline-block;
+  padding:12px 28px;
+  border:1px solid #2e2a26;
+  text-decoration:none;
+  color:#2e2a26;
+  margin-top:30px;
+  transition:0.4s;
+}
+.button:hover{
+  background:#2e2a26;
+  color:#fff;
+}
+
+/* 숨 고르기 */
+#breathScreen{
+  position:fixed;
+  inset:0;
+  background:#f8f5ef;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:999;
+  font-size:1.4rem;
+  transition:1s;
+}
+
+.count{
+  margin-top:20px;
+  font-size:2rem;
+}
+
+/* 모달 */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:0.4s;
+  z-index:500;
+}
+
+.modal.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.modal-content{
+  background:#fffdf8;
+  padding:50px 40px;
+  text-align:center;
+  max-width:400px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* 잉크 효과 */
+.ink{
+  position:fixed;
+  top:50%;
+  left:50%;
+  width:10px;
+  height:10px;
+  background:black;
+  border-radius:50%;
+  transform:translate(-50%,-50%) scale(1);
+  animation:inkSpread 1.8s ease-out forwards;
+  z-index:998;
+}
+
+@keyframes inkSpread{
+  to{
+    transform:translate(-50%,-50%) scale(80);
+    opacity:0;
+  }
+}
+
+footer{
+  text-align:center;
+  padding:120px 20px;
+  font-size:0.8rem;
+  color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 숨 고르기 -->
+<div id="breathScreen">
+  <div>눈을 감고 3초만 숨을 고르세요</div>
+  <div class="count" id="count">3</div>
+</div>
+
+<nav id="navbar">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="classes.html">Classes</a>
+<a href="gallery.html">Gallery</a>
+<a href="studio.html">Studio</a>
+<a href="community.html">Community</a>
+<span id="dynamicMenu"></span>
+<span id="authArea"></span>
+</nav>
+
+<section>
+<h1>여백의 시간</h1>
+<div class="subtitle">오늘, 당신의 마음은 어떤가요?</div>
+<div id="dailyQuote"></div>
+<a href="classes.html" class="button">여백을 만나기</a>
+</section>
+
+<section>
+<h1>우리는 글을 가르치기보다</h1>
+<div class="subtitle">마음을 쉬게 합니다.</div>
+</section>
+
+<section>
+<h1>천천히 오셔도 됩니다.</h1>
+<div class="subtitle">여백은 늘 이 자리에 있습니다.</div>
+<a href="studio.html" class="button">예약하기</a>
+</section>
+
+<footer>© 2026 여백의 시간</footer>
+
+<!-- 로그인 모달 -->
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+    <p style="margin-bottom:25px;">여백은 준비된 사람에게 열립니다.</p>
+    <a href="auth/login.html" class="button">로그인 하기</a>
+  </div>
+</div>
+
+<script>
+
+/* 숨 고르기 */
+let count=3;
+let counter=document.getElementById("count");
+let breathScreen=document.getElementById("breathScreen");
+
+let timer=setInterval(()=>{
+  count--;
+  counter.innerText=count;
+  if(count<=0){
+    clearInterval(timer);
+    breathScreen.style.opacity="0";
+    setTimeout(()=>{breathScreen.style.display="none";},1000);
+  }
+},1000);
+
+/* 랜덤 문장 */
+const quotes=[
+"조용함도 하나의 대답입니다.",
+"천천히 써도 괜찮습니다.",
+"마음에도 숨이 필요합니다.",
+"여백은 비어있는 것이 아니라, 머무는 공간입니다.",
+"당신의 속도로 걸어가세요."
+];
+document.getElementById("dailyQuote").innerText=
+quotes[Math.floor(Math.random()*quotes.length)];
+
+/* 스크롤 페이드 */
+const sections=document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
+  document.getElementById("navbar").classList.toggle("scrolled",window.scrollY>50);
+  sections.forEach(sec=>{
+    if(sec.getBoundingClientRect().top<window.innerHeight-100){
+      sec.classList.add("visible");
+    }
+  });
+});
+
+/* 로그인 UI */
+function renderAuthUI(){
+  const authArea=document.getElementById("authArea");
+  const dynamicMenu=document.getElementById("dynamicMenu");
+  const currentUser=localStorage.getItem("currentUser");
+
+  if(currentUser){
+    const users=JSON.parse(localStorage.getItem("users"))||[];
+    const user=users.find(u=>u.email===currentUser);
+
+    dynamicMenu.innerHTML=`<a href="mypage/dashboard.html" id="myLink">${user?user.name:"나"}님의 여백</a>`;
+    setTimeout(()=>{document.getElementById("myLink").classList.add("show");},100);
+
+    authArea.innerHTML=`<a href="#" onclick="logout()">로그아웃</a>`;
+
+    /* 로그인 잉크 효과 */
+    const ink=document.createElement("div");
+    ink.className="ink";
+    document.body.appendChild(ink);
+    setTimeout(()=>ink.remove(),1800);
+
+  }else{
+    dynamicMenu.innerHTML=`<a href="#" id="guestMy">여백에 들어가기</a>`;
+    setTimeout(()=>{document.getElementById("guestMy").classList.add("show");},100);
+
+    document.getElementById("guestMy").onclick=function(e){
+      e.preventDefault();
+      document.getElementById("loginModal").classList.add("active");
+    };
+
+    authArea.innerHTML=`
+    <a href="auth/login.html">로그인</a>
+    <a href="auth/signup.html" style="margin-left:10px;">회원가입</a>`;
+  }
+}
+
+function logout(){
+  localStorage.removeItem("currentUser");
+  location.reload();
+}
+
+window.onclick=function(e){
+  if(e.target.classList.contains("modal")){
+    e.target.classList.remove("active");
+  }
+};
+
+renderAuthUI();
+
+</script>
+
+</body>
+</html>
