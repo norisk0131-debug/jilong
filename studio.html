@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 수묵 캘리 제작 | 여백의 시간</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Nanum+Brush+Script&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Noto Serif KR',serif;
+  background:#f6f2ea;
+  color:#3e3a36;
+}
+
+nav{
+  text-align:center;
+  padding:20px;
+}
+
+nav a{
+  margin:0 15px;
+  text-decoration:none;
+  color:#555;
+}
+
+.studio{
+  display:flex;
+  flex-wrap:wrap;
+  max-width:1400px;
+  margin:60px auto;
+  gap:40px;
+  padding:0 20px;
+}
+
+.controls{
+  flex:1;
+  min-width:280px;
+  background:#fffdf8;
+  padding:30px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.05);
+}
+
+.controls label{
+  display:block;
+  margin-top:15px;
+}
+
+.controls input,
+.controls select{
+  width:100%;
+  padding:8px;
+  margin-top:5px;
+}
+
+.preview{
+  flex:2;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.canvas-area{
+  width:600px;
+  height:400px;
+  background:#fff;
+  background-size:cover;
+  background-position:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.1);
+  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.canvas-area::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('images/brush-texture.png');
+  opacity:0.15;
+  mix-blend-mode:multiply;
+}
+
+.canvas-text{
+  text-align:center;
+  padding:20px;
+  word-break:keep-all;
+}
+
+.button{
+  display:inline-block;
+  margin-top:15px;
+  padding:10px 20px;
+  border:1px solid #3e3a36;
+  background:none;
+  cursor:pointer;
+}
+
+.button:hover{
+  background:#3e3a36;
+  color:#fff;
+}
+</style>
+</head>
+
+<body>
+<script>
+if(!localStorage.getItem("currentUser")){
+  window.location.href="auth/login.html";
+}
+</script>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="classes.html">Classes</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="studio.html">Studio</a>
+  <a href="community.html">Community</a>
+  <a href="mypage/dashboard.html">My</a>
+</nav>
+
+
+<div class="studio">
+
+<div class="controls">
+
+<label>문장 입력</label>
+<input type="text" id="textInput">
+
+<button class="button" onclick="generateSentence()">🌫 AI 문장 생성</button>
+
+<label>서체</label>
+<select id="fontSelect">
+<option value="'Nanum Brush Script', cursive">붓 서체</option>
+<option value="'Gaegu', cursive">감성 손글씨</option>
+<option value="'Noto Serif KR', serif">정갈한 서체</option>
+</select>
+
+<label>크기</label>
+<input type="range" id="sizeRange" min="20" max="120" value="60">
+
+<label>배경</label>
+<select id="bgSelect">
+<option value="">기본</option>
+<option value="images/bg1.jpg">수묵1</option>
+<option value="images/bg2.jpg">수묵2</option>
+<option value="images/bg3.jpg">수묵3</option>
+</select>
+
+<button class="button" onclick="downloadImage()">PNG 다운로드</button>
+<button class="button" onclick="saveToGallery()">저장</button>
+
+</div>
+
+<div class="preview">
+<div class="canvas-area" id="canvasArea">
+<div class="canvas-text" id="canvasText">여백의 시간</div>
+</div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+const textInput=document.getElementById("textInput");
+const fontSelect=document.getElementById("fontSelect");
+const sizeRange=document.getElementById("sizeRange");
+const bgSelect=document.getElementById("bgSelect");
+const canvasText=document.getElementById("canvasText");
+const canvasArea=document.getElementById("canvasArea");
+
+function updateCanvas(){
+  canvasText.innerText=textInput.value;
+  canvasText.style.fontFamily=fontSelect.value;
+  canvasText.style.fontSize=sizeRange.value+"px";
+  canvasArea.style.backgroundImage=bgSelect.value?`url(${bgSelect.value})`:"";
+}
+
+[textInput,fontSelect,sizeRange,bgSelect].forEach(el=>el.oninput=updateCanvas);
+
+async function generateSentence(){
+  const mood=prompt("어떤 분위기인가요?");
+  if(!mood) return;
+
+  const res=await fetch("/api/generate",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({mood})
+  });
+
+  const data=await res.json();
+  textInput.value=data.text;
+  updateCanvas();
+}
+
+function downloadImage(){
+  html2canvas(canvasArea).then(canvas=>{
+    const link=document.createElement("a");
+    link.download="calligraphy.png";
+    link.href=canvas.toDataURL();
+    link.click();
+  });
+}
+</script>
+
+</body>
+</html>

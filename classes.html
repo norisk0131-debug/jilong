@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classes | 여백의 시간</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Noto Serif KR',serif;
+  background:#f8f5ef;
+  color:#2e2a26;
+  line-height:1.9;
+}
+
+/* 네비 */
+nav{
+  text-align:center;
+  padding:25px 0;
+  font-size:0.9rem;
+}
+nav a{
+  margin:0 16px;
+  text-decoration:none;
+  color:#555;
+}
+nav a:hover{opacity:0.6;}
+
+/* 섹션 */
+.section{
+  max-width:900px;
+  margin:120px auto;
+  padding:0 20px;
+  text-align:center;
+}
+
+.hero{
+  margin-top:180px;
+}
+
+h1{
+  font-weight:400;
+  font-size:2rem;
+  margin-bottom:25px;
+}
+
+p{
+  margin-bottom:20px;
+  color:#4b443f;
+}
+
+/* 클래스 카드 */
+.class-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:40px;
+  margin-top:60px;
+}
+
+.class-card{
+  background:#fffdf8;
+  padding:40px 30px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.05);
+  transition:0.4s ease;
+}
+.class-card:hover{
+  transform:translateY(-6px);
+}
+
+.class-title{
+  font-size:1.2rem;
+  margin-bottom:20px;
+}
+
+.button{
+  display:inline-block;
+  margin-top:30px;
+  padding:10px 25px;
+  border:1px solid #2e2a26;
+  text-decoration:none;
+  color:#2e2a26;
+  transition:0.3s;
+}
+.button:hover{
+  background:#2e2a26;
+  color:#fff;
+}
+
+footer{
+  text-align:center;
+  padding:100px 20px;
+  font-size:0.8rem;
+  color:#aaa;
+}
+
+/* 모바일 */
+@media(max-width:600px){
+  .section{margin:80px auto;}
+  .hero{margin-top:120px;}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="classes.html">Classes</a>
+<a href="gallery.html">Gallery</a>
+<a href="studio.html">Studio</a>
+<a href="community.html">Community</a>
+<a href="mypage/dashboard.html">My</a>
+</nav>
+
+<!-- Hero -->
+<div class="section hero">
+<h1>우리는 글을 배우지 않습니다.</h1>
+<p>우리는 멈추는 법을 배웁니다.</p>
+</div>
+
+<!-- 철학 -->
+<div class="section">
+<p>
+빠르게 써내려가는 기술이 아니라,<br>
+천천히 머무는 감각을 나눕니다.
+</p>
+<p>
+결과보다 과정을,<br>
+완성보다 숨 고르는 시간을 중요하게 생각합니다.
+</p>
+</div>
+
+<!-- 클래스 목록 -->
+<div class="section">
+<div class="class-grid">
+
+<div class="class-card">
+<div class="class-title">캘리그라피 – 붓과 호흡</div>
+<p>획 하나에 숨을 담는 시간.</p>
+<a href="class-calligraphy.html" class="button">자세히 보기</a>
+</div>
+
+<div class="class-card">
+<div class="class-title">감성 문장 – 나를 적는 시간</div>
+<p>오늘의 마음을 조용히 기록합니다.</p>
+<a href="class-sentence.html" class="button">자세히 보기</a>
+</div>
+
+<div class="class-card">
+<div class="class-title">힐링 글쓰기 – 비워내는 연습</div>
+<p>당신만의 여백을 찾습니다.</p>
+<a href="class-writing.html" class="button">자세히 보기</a>
+</div>
+
+</div>
+</div>
+
+<!-- 참여 안내 -->
+<div class="section">
+<p>
+여백은 강요하지 않습니다.<br>
+다만, 준비된 분을 기다립니다.
+</p>
+<a href="community.html" class="button">참여 문의하기</a>
+</div>
+
+<footer>
+© 2026 여백의 시간.
+</footer>
+
+</body>
+</html>
